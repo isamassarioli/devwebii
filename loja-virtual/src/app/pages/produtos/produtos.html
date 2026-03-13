@@ -1,1 +1,22 @@
 <h1>Produtos</h1>
+
+<p>Lista de produtos disponíveis na nossa loja.</p>
+
+<table class="tabela-produtos">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Nome</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let p of produtos">
+			<td><a [routerLink]="['/produtos', p.id]">{{ p.id }}</a></td>
+			<td><a [routerLink]="['/produtos', p.id]">{{ p.nome }}</a></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>
+	<em>Clique no ID ou nome para ver o detalhamento do produto.</em>
+</p>

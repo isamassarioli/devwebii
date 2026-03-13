@@ -5,6 +5,7 @@ import { LayoutAdmin } from './layouts/layout-admin/layout-admin';
 import { AdminDashboard } from './pages/admin-dashboard/admin-dashboard';
 import { AdminClientes } from './pages/admin-clientes/admin-clientes';
 import { Produtos } from './pages/produtos/produtos';
+import { ProdutoDetalhe } from './pages/produtos/produto-detalhe';
 
 export const routes: Routes = [
   // Área pública (usa o layout público)
@@ -14,7 +15,8 @@ export const routes: Routes = [
 	children: [
 	  { path: '', redirectTo: 'home', pathMatch: 'full' },
 	  { path: 'home', component: Home },
-	  { path: 'produtos', component: Produtos },
+	{ path: 'produtos', component: Produtos },
+	{ path: 'produtos/:id', component: ProdutoDetalhe },
 
 	],
   },
