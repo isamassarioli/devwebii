@@ -1,0 +1,285 @@
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="logo-area">
+      <h1 class="titulo">🎓 IFES</h1>
+      <p class="subtitulo">Ficha de Matrícula de Alunos</p>
+    </div>
+  </div>
+
+  <!-- Mensagem de Sucesso -->
+  <div *ngIf="mensagemSucesso" class="alert alert-success">
+    <span class="icon">✓</span>
+    {{ mensagemSucesso }}
+  </div>
+
+  <!-- Resumo de Dados (após envio) -->
+  <div *ngIf="resumoDados" class="resumo-container">
+    <div class="resumo-card">
+      <div class="resumo-header">
+        <h2>📋 Resumo da Matrícula</h2>
+        <button type="button" class="btn-close" (click)="fecharResumo()">✕</button>
+      </div>
+
+      <div class="resumo-content">
+        <div class="resumo-item">
+          <strong>Nome Completo:</strong>
+          <span>{{ resumoDados.nomeCompleto }}</span>
+        </div>
+        <div class="resumo-item">
+          <strong>E-mail:</strong>
+          <span>{{ resumoDados.email }}</span>
+        </div>
+        <div class="resumo-item">
+          <strong>Idade:</strong>
+          <span>{{ resumoDados.idade }} anos</span>
+        </div>
+        <div class="resumo-item">
+          <strong>Gênero:</strong>
+          <span>{{ resumoDados.genero }}</span>
+        </div>
+        <div class="resumo-item">
+          <strong>Cidade:</strong>
+          <span>{{ resumoDados.cidade }}</span>
+        </div>
+        <div class="resumo-item">
+          <strong>Termos Aceitos:</strong>
+          <span [class.check]="resumoDados.aceitarTermos">
+            {{ resumoDados.aceitarTermos ? '✓ Sim' : '✗ Não' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="resumo-actions">
+        <button type="button" class="btn btn-secondary" (click)="editarMatricula()">
+          ✏️ Editar Formulário
+        </button>
+        <button type="button" class="btn btn-success">
+          ✓ Confirmar Matrícula
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulário de Matrícula -->
+  <form #matriculaForm="ngForm" (ngSubmit)="onSubmit(matriculaForm)" [hidden]="resumoDados" class="formulario">
+    <div class="form-wrapper">
+      <!-- Seção 1: Dados Pessoais -->
+      <fieldset class="form-section">
+        <legend>Dados Pessoais</legend>
+
+        <!-- Nome Completo -->
+        <div class="form-group">
+          <label for="nomeCompleto" class="label-required">Nome Completo *</label>
+          <input
+            id="nomeCompleto"
+            name="nomeCompleto"
+            type="text"
+            [(ngModel)]="dados.nomeCompleto"
+            required
+            minlength="3"
+            placeholder="Digite seu nome completo"
+            #nomeRef="ngModel"
+            class="form-control"
+          />
+          <div *ngIf="(nomeRef.touched || nomeRef.dirty) && nomeRef.invalid" class="error-message">
+            <span *ngIf="nomeRef.errors?.['required']">⚠️ Nome é obrigatório</span>
+            <span *ngIf="nomeRef.errors?.['minlength']">⚠️ Nome deve ter no mínimo 3 caracteres</span>
+          </div>
+        </div>
+
+        <!-- E-mail -->
+        <div class="form-group">
+          <label for="email" class="label-required">E-mail *</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            [(ngModel)]="dados.email"
+            required
+            email
+            placeholder="seu@email.com"
+            #emailRef="ngModel"
+            class="form-control"
+          />
+          <div *ngIf="(emailRef.touched || emailRef.dirty) && emailRef.invalid" class="error-message">
+            <span *ngIf="emailRef.errors?.['required']">⚠️ E-mail é obrigatório</span>
+            <span *ngIf="emailRef.errors?.['email']">⚠️ E-mail inválido. Use o formato: seu@email.com</span>
+          </div>
+        </div>
+
+        <!-- Idade -->
+        <div class="form-group">
+          <label for="idade" class="label-required">Idade *</label>
+          <input
+            id="idade"
+            name="idade"
+            type="number"
+            [(ngModel)]="dados.idade"
+            required
+            min="18"
+            placeholder="18"
+            #idadeRef="ngModel"
+            class="form-control"
+          />
+          <div *ngIf="(idadeRef.touched || idadeRef.dirty) && idadeRef.invalid" class="error-message">
+            <span *ngIf="idadeRef.errors?.['required']">⚠️ Idade é obrigatória</span>
+            <span *ngIf="idadeRef.errors?.['min']">⚠️ A idade mínima é 18 anos</span>
+          </div>
+        </div>
+
+        <!-- Gênero -->
+        <div class="form-group">
+          <label for="genero" class="label-required">Gênero *</label>
+          <select
+            id="genero"
+            name="genero"
+            [(ngModel)]="dados.genero"
+            required
+            #generoRef="ngModel"
+            class="form-control"
+          >
+            <option value="">Selecione uma opção</option>
+            <option *ngFor="let genero of generos" [value]="genero">
+              {{ genero }}
+            </option>
+          </select>
+          <div *ngIf="(generoRef.touched || generoRef.dirty) && generoRef.invalid" class="error-message">
+            <span *ngIf="generoRef.errors?.['required']">⚠️ Gênero é obrigatório</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Seção 2: Endereço -->
+      <fieldset class="form-section">
+        <legend>Endereço</legend>
+
+        <!-- Cidade -->
+        <div class="form-group">
+          <label for="cidade" class="label-required">Cidade *</label>
+          <select
+            id="cidade"
+            name="cidade"
+            [(ngModel)]="dados.cidade"
+            required
+            #cidadeRef="ngModel"
+            class="form-control"
+          >
+            <option value="">Selecione uma cidade</option>
+            <option *ngFor="let cidade of cidades" [value]="cidade">
+              {{ cidade }}
+            </option>
+          </select>
+          <div *ngIf="(cidadeRef.touched || cidadeRef.dirty) && cidadeRef.invalid" class="error-message">
+            <span *ngIf="cidadeRef.errors?.['required']">⚠️ Cidade é obrigatória</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Seção 3: Credenciais -->
+      <fieldset class="form-section">
+        <legend>Credenciais de Acesso</legend>
+
+        <!-- Senha -->
+        <div class="form-group">
+          <label for="senha" class="label-required">Senha *</label>
+          <input
+            id="senha"
+            name="senha"
+            type="password"
+            [(ngModel)]="dados.senha"
+            required
+            minlength="6"
+            placeholder="Mínimo 6 caracteres"
+            #senhaRef="ngModel"
+            class="form-control"
+          />
+          <div *ngIf="(senhaRef.touched || senhaRef.dirty) && senhaRef.invalid" class="error-message">
+            <span *ngIf="senhaRef.errors?.['required']">⚠️ Senha é obrigatória</span>
+            <span *ngIf="senhaRef.errors?.['minlength']">⚠️ Senha deve ter no mínimo 6 caracteres</span>
+          </div>
+        </div>
+
+        <!-- Confirmar Senha -->
+        <div class="form-group">
+          <label for="confirmarSenha" class="label-required">Confirmar Senha *</label>
+          <input
+            id="confirmarSenha"
+            name="confirmarSenha"
+            type="password"
+            [(ngModel)]="dados.confirmarSenha"
+            required
+            placeholder="Confirme sua senha"
+            #confirmarSenhaRef="ngModel"
+            class="form-control"
+          />
+          <div *ngIf="(confirmarSenhaRef.touched || confirmarSenhaRef.dirty) && confirmarSenhaRef.invalid" class="error-message">
+            <span *ngIf="confirmarSenhaRef.errors?.['required']">⚠️ Confirmação de senha é obrigatória</span>
+          </div>
+          <div *ngIf="formularioEnviado && !validarSenhasIguais() && (senhaRef.touched || confirmarSenhaRef.touched)" class="error-message">
+            <span>⚠️ As senhas não correspondem</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Seção 4: Termos -->
+      <fieldset class="form-section">
+        <legend>Aceite de Termos</legend>
+
+        <!-- Checkbox de Termos -->
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input
+              id="aceitarTermos"
+              name="aceitarTermos"
+              type="checkbox"
+              [(ngModel)]="dados.aceitarTermos"
+              required
+              #termosRef="ngModel"
+              class="checkbox-input"
+            />
+            <span class="label-required">Aceito os termos e condições *</span>
+          </label>
+          <div *ngIf="(termosRef.touched || termosRef.dirty) && termosRef.invalid" class="error-message">
+            <span *ngIf="termosRef.errors?.['required']">⚠️ Você deve aceitar os termos e condições</span>
+          </div>
+          <p class="termo-texto">
+            Ao se matricular, você concorda com nossos termos de uso e política de privacidade.
+          </p>
+        </div>
+      </fieldset>
+
+      <!-- Botões de Ação -->
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!validarSenhasIguais() || !validarIdade()"
+        >
+          📝 Cadastrar
+        </button>
+        <button
+          type="reset"
+          class="btn btn-secondary"
+          (click)="onReset(matriculaForm)"
+        >
+          🔄 Limpar Formulário
+        </button>
+      </div>
+
+      <!-- Status do Formulário (Debug) -->
+      <div class="form-status">
+        <details>
+          <summary>ℹ️ Status do Formulário (clique para expandir)</summary>
+          <div class="status-content">
+            <p><strong>Válido:</strong> <span [class.valid]="matriculaForm.valid">{{ matriculaForm.valid ? '✓ Sim' : '✗ Não' }}</span></p>
+            <p><strong>Tocado:</strong> <span>{{ matriculaForm.touched ? 'Sim' : 'Não' }}</span></p>
+            <p><strong>Sujo:</strong> <span>{{ matriculaForm.dirty ? 'Sim' : 'Não' }}</span></p>
+            <p><strong>Senhas iguais:</strong> <span [class.valid]="validarSenhasIguais()">{{ validarSenhasIguais() ? '✓ Sim' : '✗ Não' }}</span></p>
+            <p><strong>Idade válida:</strong> <span [class.valid]="validarIdade()">{{ validarIdade() ? '✓ Sim' : '✗ Não' }}</span></p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </form>
+</div>
