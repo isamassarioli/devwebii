@@ -1,0 +1,132 @@
+<div class="container">
+  <h1>Formulário com Validação (ngForm)</h1>
+  
+  <!-- Mensagens de Sucesso e Erro -->
+  <div *ngIf="mensagemSucesso" class="alert alert-success">
+    ✓ {{ mensagemSucesso }}
+  </div>
+  <div *ngIf="mensagemErro" class="alert alert-error">
+    ✗ {{ mensagemErro }}
+  </div>
+
+  <!-- Formulário com ngForm -->
+  <form #formularioRef="ngForm" (ngSubmit)="onSubmit()" [ngClass]="{ 'form-invalid': !formularioRef.valid }" class="form-container">
+    
+    <div class="form-group">
+      <label for="nome">Nome Completo *</label>
+      <input 
+        id="nome"
+        name="nome"
+        type="text"
+        [(ngModel)]="formulario.nome"
+        required
+        minlength="3"
+        placeholder="Digite seu nome completo"
+        #nomeInput="ngModel"
+        class="form-control"
+      />
+      <!-- Mensagens de Validação do Nome -->
+      <div *ngIf="nomeInput.touched && nomeInput.invalid" class="error-message">
+        <span *ngIf="nomeInput.errors?.['required']">Nome é obrigatório</span>
+        <span *ngIf="nomeInput.errors?.['minlength']">Nome deve ter pelo menos 3 caracteres</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email *</label>
+      <input 
+        id="email"
+        name="email"
+        type="email"
+        [(ngModel)]="formulario.email"
+        required
+        email
+        placeholder="seu@exemplo.com"
+        #emailInput="ngModel"
+        class="form-control"
+      />
+      <!-- Mensagens de Validação do Email -->
+      <div *ngIf="emailInput.touched && emailInput.invalid" class="error-message">
+        <span *ngIf="emailInput.errors?.['required']">Email é obrigatório</span>
+        <span *ngIf="emailInput.errors?.['email']">Email inválido</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="telefone">Telefone</label>
+      <input 
+        id="telefone"
+        name="telefone"
+        type="tel"
+        [(ngModel)]="formulario.telefone"
+        placeholder="(11) 91234-5678"
+        pattern="[\d+\-\s()]{6,}"
+        #telefoneInput="ngModel"
+        class="form-control"
+      />
+      <!-- Mensagens de Validação do Telefone -->
+      <div *ngIf="telefoneInput.touched && telefoneInput.invalid" class="error-message">
+        <span *ngIf="telefoneInput.errors?.['pattern']">Telefone inválido. Use o formato (XX) 9XXXX-XXXX</span>
+      </div>
+      <small class="form-text">Opcional - formato: (11) 91234-5678</small>
+    </div>
+
+    <div class="form-group">
+      <label for="mensagem">Mensagem *</label>
+      <textarea 
+        id="mensagem"
+        name="mensagem"
+        [(ngModel)]="formulario.mensagem"
+        required
+        minlength="10"
+        maxlength="500"
+        placeholder="Digite sua mensagem aqui..."
+        #mensagemInput="ngModel"
+        class="form-control"
+        rows="5"
+      ></textarea>
+      <!-- Mensagens de Validação da Mensagem -->
+      <div *ngIf="mensagemInput.touched && mensagemInput.invalid" class="error-message">
+        <span *ngIf="mensagemInput.errors?.['required']">Mensagem é obrigatória</span>
+        <span *ngIf="mensagemInput.errors?.['minlength']">Mensagem deve ter pelo menos 10 caracteres</span>
+      </div>
+      <div class="form-text">
+        {{ formulario.mensagem.length }} / 500 caracteres
+      </div>
+    </div>
+
+    <!-- Status do Formulário -->
+    <div class="form-status">
+      <p><strong>Status do Formulário:</strong> 
+        <span [ngClass]="formularioRef.valid ? 'status-valid' : 'status-invalid'">
+          {{ formularioRef.valid ? '✓ Formulário válido' : '✗ Formulário inválido' }}
+        </span>
+      </p>
+    </div>
+
+    <!-- Botões de Ação -->
+    <div class="form-actions">
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="!formularioRef.valid"
+      >
+        Enviar Formulário
+      </button>
+      <button 
+        type="reset" 
+        class="btn btn-secondary"
+        (click)="onReset()"
+      >
+        Limpar Formulário
+      </button>
+    </div>
+
+    <!-- Debug: Mostrar dados do formulário -->
+    <div class="debug-info">
+      <p><strong>Dados capturados:</strong></p>
+      <pre>{{ formulario | json }}</pre>
+    </div>
+
+  </form>
+</div>
