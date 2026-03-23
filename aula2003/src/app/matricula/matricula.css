@@ -12,6 +12,7 @@
   --gray-dark: #495057;
   --white: #ffffff;
   --text: #212529;
+  --text-light: #f0f0f0;
   --border: #dee2e6;
   --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.12);
@@ -32,24 +33,29 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   color: var(--text);
   line-height: 1.6;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 }
 
 /* ===== CONTAINER ===== */
 .container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 40px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  color: var(--text);
 }
 
 /* ===== HEADER ===== */
 .header {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: white;
-  padding: 40px 20px;
-  border-radius: 12px;
-  margin-bottom: 30px;
+  color: black;
+  padding: 50px 20px;
+  border-radius: 16px;
+  margin-bottom: 40px;
   text-align: center;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 10px 30px rgba(3, 102, 214, 0.2);
 }
 
 .logo-area {
@@ -57,17 +63,19 @@ body {
 }
 
 .titulo {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+  letter-spacing: -0.5px;
 }
 
 .subtitulo {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   opacity: 0.95;
   font-weight: 300;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
 
 /* ===== ANIMAÇÕES ===== */
@@ -150,9 +158,9 @@ body {
 .form-section {
   border: none;
   padding: 0;
-  margin-bottom: 30px;
-  padding-bottom: 30px;
-  border-bottom: 2px solid var(--gray-light);
+  margin-bottom: 35px;
+  padding-bottom: 35px;
+  border-bottom: 2px solid #f0f0f0;
 }
 
 .form-section:last-of-type {
@@ -162,28 +170,30 @@ body {
 }
 
 .form-section legend {
-  font-size: 1.3rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 800;
   color: var(--primary);
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid var(--primary);
+  margin-bottom: 25px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid var(--primary);
   display: inline-block;
-  padding-right: 10px;
+  padding-right: 12px;
+  letter-spacing: -0.3px;
 }
 
 /* ===== FORM GROUP ===== */
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   display: flex;
   flex-direction: column;
 }
 
 .form-group label {
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: var(--gray-dark);
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #333;
   font-size: 0.95rem;
+  letter-spacing: 0.3px;
 }
 
 .label-required::after {
@@ -196,42 +206,51 @@ body {
 /* ===== INPUTS ===== */
 .form-control {
   width: 100%;
-  padding: 12px 14px;
-  border: 2px solid var(--border);
-  border-radius: 8px;
+  padding: 14px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
   font-size: 1rem;
   font-family: inherit;
   transition: all 0.3s ease;
   background-color: var(--white);
+  color: var(--text);
+}
+
+.form-control:hover {
+  border-color: #bbb;
+  background-color: #fafafa;
 }
 
 .form-control:focus {
   outline: none;
   border-color: var(--primary);
-  background-color: var(--primary-light);
-  box-shadow: 0 0 0 4px rgba(3, 102, 214, 0.1);
+  background-color: #f8f9ff;
+  box-shadow: 0 0 0 5px rgba(3, 102, 214, 0.1), inset 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .form-control:valid:not(:placeholder-shown) {
   border-color: var(--success);
+  background-color: #f0fdf4;
 }
 
 .form-control:invalid:not(:placeholder-shown):not(select) {
   border-color: var(--danger);
+  background-color: #fff5f5;
 }
 
 .form-control::placeholder {
-  color: #adb5bd;
+  color: #b0b0b0;
+  font-style: italic;
 }
 
 /* SELECT ===== */
 select.form-control {
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23495057' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 12px center;
-  padding-right: 36px;
+  background-position: right 14px center;
+  padding-right: 40px;
 }
 
 select.form-control:focus {
@@ -299,51 +318,52 @@ select.form-control:focus {
 /* ===== BOTÕES ===== */
 .form-actions {
   display: flex;
-  gap: 12px;
-  margin-top: 30px;
+  gap: 16px;
+  margin-top: 40px;
   padding-top: 30px;
   border-top: 2px solid var(--gray-light);
   flex-wrap: wrap;
 }
 
 .btn {
-  padding: 12px 24px;
+  padding: 14px 32px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
   flex: 1;
-  min-width: 150px;
+  min-width: 160px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .btn:active:not(:disabled) {
-  transform: translateY(0);
+  transform: translateY(-1px);
 }
 
 .btn-primary {
-  background-color: var(--primary);
-  color: white;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: rgb(0, 0, 0);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: var(--primary-dark);
+  filter: brightness(1.1);
 }
 
 .btn-secondary {
-  background-color: var(--secondary);
+  background-color: #6c757d;
   color: white;
 }
 
@@ -352,12 +372,12 @@ select.form-control:focus {
 }
 
 .btn-success {
-  background-color: var(--success);
+  background: linear-gradient(135deg, var(--success) 0%, #1e7e34 100%);
   color: white;
 }
 
 .btn-success:hover:not(:disabled) {
-  background-color: #218838;
+  filter: brightness(1.1);
 }
 
 .btn:disabled {
