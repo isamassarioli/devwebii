@@ -1,0 +1,25 @@
+/* Simple styles for formulario */
+.form-card {
+	background: #fff;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+	max-width: 520px;
+}
+
+.form-card h2 {
+	margin-bottom: 16px;
+	color: #152238;
+}
+
+.form-group { margin-bottom: 14px; }
+.label-required::after { content: ' *'; color: #c92a2a; }
+.form-control { width: 100%; padding: 10px 12px; border-radius: 6px; border: 1px solid #dcdcdc; }
+.form-control:focus { outline: none; box-shadow: 0 6px 18px rgba(3,102,214,0.08); border-color: #0366d6; }
+.error small { color: #c92a2a; }
+.form-actions { display:flex; gap:12px; margin-top: 12px; }
+.btn { padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; }
+.btn-primary { background: linear-gradient(135deg,#0366d6,#0256c7); color: #fff; }
+.btn-secondary { background: #6c757d; color: #fff; }
+.btn[disabled] { opacity: 0.6; cursor: not-allowed; }
+.summary { margin-top: 18px; background:#f8f9fb; padding:12px; border-radius:6px; }

@@ -1,0 +1,65 @@
+<section class="form-card">
+	<h2>Formulário 2 — Nome e Endereço</h2>
+
+	<form #f="ngForm" (ngSubmit)="onSubmit(f)" class="address-form">
+		<div class="form-group">
+			<label for="nome2" class="label-required">Nome</label>
+			<input id="nome2" name="nome" type="text" class="form-control" [(ngModel)]="nome" required minlength="3" #nomeRef="ngModel" placeholder="Digite seu nome" />
+			<div class="error" *ngIf="(nomeRef.touched || nomeRef.dirty) && nomeRef.invalid">
+				<small *ngIf="nomeRef.errors?.['required']">O nome é obrigatório.</small>
+				<small *ngIf="nomeRef.errors?.['minlength']">Mínimo 3 caracteres.</small>
+			</div>
+		</div>
+
+		<fieldset class="form-section">
+			<legend>Endereço</legend>
+
+			<div class="form-group">
+				<label for="rua" class="label-required">Rua</label>
+				<input id="rua" name="rua" type="text" class="form-control" [(ngModel)]="logradouro.rua" required #ruaRef="ngModel" placeholder="Nome da rua" />
+				<div class="error" *ngIf="(ruaRef.touched || ruaRef.dirty) && ruaRef.invalid">
+					<small>Informe a rua.</small>
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="form-group" style="flex:1; margin-right:12px;">
+					<label for="numero" class="label-required">Número</label>
+					<input id="numero" name="numero" type="text" class="form-control" [(ngModel)]="logradouro.numero" required pattern="^[0-9A-Za-z-]+$" #numRef="ngModel" placeholder="123" />
+					<div class="error" *ngIf="(numRef.touched || numRef.dirty) && numRef.invalid">
+						<small>Informe o número.</small>
+					</div>
+				</div>
+
+				<div class="form-group" style="flex:1">
+					<label for="bairro" class="label-required">Bairro</label>
+					<input id="bairro" name="bairro" type="text" class="form-control" [(ngModel)]="logradouro.bairro" required #bairroRef="ngModel" placeholder="Bairro" />
+					<div class="error" *ngIf="(bairroRef.touched || bairroRef.dirty) && bairroRef.invalid">
+						<small>Informe o bairro.</small>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="cidade" class="label-required">Cidade</label>
+				<input id="cidade" name="cidade" type="text" class="form-control" [(ngModel)]="logradouro.cidade" required #cidadeRef="ngModel" placeholder="Cidade" />
+				<div class="error" *ngIf="(cidadeRef.touched || cidadeRef.dirty) && cidadeRef.invalid">
+					<small>Informe a cidade.</small>
+				</div>
+			</div>
+		</fieldset>
+
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary" [disabled]="!f.valid">Enviar</button>
+			<button type="button" class="btn btn-secondary" (click)="onReset(f)">Limpar</button>
+		</div>
+
+		<div class="summary" *ngIf="enviado && f.valid">
+			<h3>Dados enviados</h3>
+			<p><strong>Nome:</strong> {{ nome }}</p>
+			<p><strong>Rua:</strong> {{ logradouro.rua }}, <strong>Nº</strong> {{ logradouro.numero }}</p>
+			<p><strong>Bairro:</strong> {{ logradouro.bairro }}</p>
+			<p><strong>Cidade:</strong> {{ logradouro.cidade }}</p>
+		</div>
+	</form>
+</section>
