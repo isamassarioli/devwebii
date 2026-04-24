@@ -1,0 +1,41 @@
+<div [formGroup]="form">
+	<div class="campo">
+		<label for="nomeCompleto">Nome completo *</label>
+		<input id="nomeCompleto" type="text" formControlName="nomeCompleto" placeholder="Digite seu nome completo" />
+		@if (controleInvalido('nomeCompleto')) {
+			<small class="erro">O nome esta invalido (minimo de 3 caracteres).</small>
+		}
+	</div>
+
+	<div class="campo">
+		<label for="email">E-mail *</label>
+		<input id="email" type="email" formControlName="email" placeholder="nome@exemplo.com" />
+		@if (controleInvalido('email')) {
+			<small class="erro">O e-mail esta invalido.</small>
+		}
+	</div>
+
+	<div class="duas-colunas">
+		<div class="campo">
+			<label for="idade">Idade *</label>
+			<input id="idade" type="number" formControlName="idade" min="18" placeholder="18" />
+			@if (controleInvalido('idade')) {
+				<small class="erro">A idade minima e 18 anos.</small>
+			}
+		</div>
+
+		<div class="campo">
+			<label for="genero">Genero *</label>
+			<select id="genero" formControlName="genero">
+				<option value="">Selecione</option>
+				<option value="Masculino">Masculino</option>
+				<option value="Feminino">Feminino</option>
+				<option value="Nao binario">Nao binario</option>
+				<option value="Prefiro nao informar">Prefiro nao informar</option>
+			</select>
+			@if (controleInvalido('genero')) {
+				<small class="erro">Selecione um genero.</small>
+			}
+		</div>
+	</div>
+</div>

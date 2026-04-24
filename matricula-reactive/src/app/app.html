@@ -1,0 +1,79 @@
+<main class="pagina">
+  <section class="cartao-formulario">
+    <header class="topo">
+      <p class="tag">Ifes - Sistema Academico</p>
+      <h1>Ficha de Matricula</h1>
+      <p class="subtitulo">Preencha os dados para concluir seu cadastro.</p>
+    </header>
+
+    <nav class="abas" aria-label="Etapas do formulario">
+      @for (aba of abas; track aba.id) {
+        <button
+          type="button"
+          class="aba-btn"
+          [class.ativa]="abaAtual === aba.id"
+          (click)="selecionarAba(aba.id)"
+        >
+          {{ aba.titulo }}
+        </button>
+      }
+    </nav>
+
+    <form [formGroup]="matriculaForm" (ngSubmit)="enviar()" novalidate>
+      @switch (abaAtual) {
+        @case ('dados') {
+          <app-dados-pessoais
+            [form]="matriculaForm"
+            [controleInvalido]="(campo) => controleInvalido(campo)"
+          />
+        }
+
+        @case ('contato') {
+          <app-contato-cidade
+            [form]="matriculaForm"
+            [telefones]="telefones"
+            [cidades]="cidades"
+            [adicionarTelefone]="() => adicionarTelefone()"
+            [removerTelefone]="(index) => removerTelefone(index)"
+            [telefoneInvalido]="(index) => telefoneInvalido(index)"
+            [controleInvalido]="(campo) => controleInvalido(campo)"
+          />
+        }
+
+        @case ('acesso') {
+          <app-acesso-termos
+            [form]="matriculaForm"
+            [controleInvalido]="(campo) => controleInvalido(campo)"
+            [erroSenhasDiferentes]="() => erroSenhasDiferentes()"
+          />
+        }
+      }
+
+      <div class="navegacao-abas">
+        <button type="button" class="btn-secundario" (click)="selecionarAba('dados')">Dados</button>
+        <button type="button" class="btn-secundario" (click)="selecionarAba('contato')">Contato</button>
+        <button type="button" class="btn-secundario" (click)="selecionarAba('acesso')">Acesso</button>
+      </div>
+
+      <button class="btn-enviar" type="submit" [disabled]="matriculaForm.invalid">Cadastrar</button>
+    </form>
+  </section>
+
+  @if (resumoEnviado) {
+    <section class="cartao-resumo">
+      <h2>Resumo do cadastro</h2>
+      <p><strong>Nome:</strong> {{ resumoEnviado.nomeCompleto }}</p>
+      <p><strong>E-mail:</strong> {{ resumoEnviado.email }}</p>
+      <p><strong>Telefones:</strong></p>
+      <ul>
+        @for (telefone of resumoEnviado.telefones; track telefone) {
+          <li>{{ telefone }}</li>
+        }
+      </ul>
+      <p><strong>Idade:</strong> {{ resumoEnviado.idade }}</p>
+      <p><strong>Genero:</strong> {{ resumoEnviado.genero }}</p>
+      <p><strong>Cidade:</strong> {{ resumoEnviado.cidade }}</p>
+      <p><strong>Termos aceitos:</strong> {{ resumoEnviado.aceitouTermos ? 'Sim' : 'Nao' }}</p>
+    </section>
+  }
+</main>

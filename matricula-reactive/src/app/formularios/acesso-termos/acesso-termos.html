@@ -1,0 +1,32 @@
+<div [formGroup]="form">
+	<div class="duas-colunas">
+		<div class="campo">
+			<label for="senha">Senha *</label>
+			<input id="senha" type="password" formControlName="senha" placeholder="Minimo de 6 caracteres" />
+			@if (controleInvalido('senha')) {
+				<small class="erro">A senha deve ter ao menos 6 caracteres.</small>
+			}
+		</div>
+
+		<div class="campo">
+			<label for="confirmarSenha">Confirmar senha *</label>
+			<input id="confirmarSenha" type="password" formControlName="confirmarSenha" placeholder="Repita sua senha" />
+			@if (controleInvalido('confirmarSenha')) {
+				<small class="erro">Confirme a senha.</small>
+			}
+			@if (erroSenhasDiferentes()) {
+				<small class="erro">As senhas precisam ser iguais.</small>
+			}
+		</div>
+	</div>
+
+	<div class="termos">
+		<label>
+			<input type="checkbox" formControlName="aceitouTermos" />
+			Aceito os termos de uso *
+		</label>
+		@if (controleInvalido('aceitouTermos')) {
+			<small class="erro">Voce precisa aceitar os termos para continuar.</small>
+		}
+	</div>
+</div>
