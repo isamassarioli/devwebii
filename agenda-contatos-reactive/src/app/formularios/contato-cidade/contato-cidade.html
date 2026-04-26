@@ -1,0 +1,42 @@
+<div [formGroup]="form">
+	<div class="campo telefones" formArrayName="telefones">
+		<div class="linha-titulo">
+			<label>Telefone(s) *</label>
+			<button type="button" class="btn-secundario" (click)="adicionarTelefone()">+ Adicionar telefone</button>
+		</div>
+
+		@for (telefoneControl of telefones.controls; track $index) {
+			<div class="linha-telefone">
+				<input
+					type="tel"
+					[formControlName]="$index"
+					placeholder="(27) 99999-9999"
+				/>
+				<button
+					type="button"
+					class="btn-remover"
+					(click)="removerTelefone($index)"
+					[disabled]="telefones.length === 1"
+				>
+					Remover
+				</button>
+			</div>
+			@if (telefoneInvalido($index)) {
+				<small class="erro">Informe um telefone valido.</small>
+			}
+		}
+	</div>
+
+	<div class="campo">
+		<label for="cidade">Cidade *</label>
+		<select id="cidade" formControlName="cidade">
+			<option value="">Selecione uma cidade</option>
+			@for (cidade of cidades; track cidade) {
+				<option [value]="cidade">{{ cidade }}</option>
+			}
+		</select>
+		@if (controleInvalido('cidade')) {
+			<small class="erro">Selecione uma cidade.</small>
+		}
+	</div>
+</div>

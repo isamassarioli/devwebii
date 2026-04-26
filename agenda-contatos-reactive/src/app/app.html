@@ -1,0 +1,103 @@
+<main class="pagina">
+  <section class="card principal">
+    <header class="topo">
+      <p class="selo">Atividade 2 - Reactive Forms</p>
+      <h1>Agenda de Contatos</h1>
+      <p class="subtitulo">Cadastre, edite e organize seus contatos em uma unica tela.</p>
+    </header>
+
+    <form class="formulario" [formGroup]="contatoForm" (ngSubmit)="inserirContato()" novalidate>
+      <div class="campo">
+        <label for="nome">Nome</label>
+        <input id="nome" type="text" formControlName="nome" placeholder="Digite o nome" />
+        @if (campoInvalido('nome')) {
+          <small class="erro">Nome e obrigatorio.</small>
+        }
+      </div>
+
+      <div class="campo">
+        <label for="telefone">Telefone</label>
+        <input id="telefone" type="text" formControlName="telefone" placeholder="(27) 99999-9999" />
+        @if (campoInvalido('telefone')) {
+          <small class="erro">Telefone e obrigatorio.</small>
+        }
+      </div>
+
+      <div class="campo">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" formControlName="email" placeholder="nome@email.com" />
+        @if (campoInvalido('email')) {
+          <small class="erro">Informe um e-mail valido.</small>
+        }
+      </div>
+
+      <button class="btn inserir" type="submit">Inserir</button>
+    </form>
+  </section>
+
+  <section class="card tabela-card">
+    <div class="tabela-cabecalho">
+      <h2>Lista de contatos</h2>
+      <p>{{ contatos.length }} registro(s)</p>
+    </div>
+
+    <div class="tabela-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>E-mail</th>
+            <th>Acoes</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (contatos.length === 0) {
+            <tr>
+              <td class="vazio" colspan="4">Nenhum contato cadastrado ainda.</td>
+            </tr>
+          }
+
+          @for (contato of contatos; track trackPorId($index, contato)) {
+            <tr [class.editando]="estaEditando(contato.id)">
+              @if (estaEditando(contato.id)) {
+                <td>
+                  <input type="text" [formControl]="edicaoForm.controls.nome" />
+                  @if (campoEdicaoInvalido('nome')) {
+                    <small class="erro">Obrigatorio.</small>
+                  }
+                </td>
+                <td>
+                  <input type="text" [formControl]="edicaoForm.controls.telefone" />
+                  @if (campoEdicaoInvalido('telefone')) {
+                    <small class="erro">Obrigatorio.</small>
+                  }
+                </td>
+                <td>
+                  <input type="email" [formControl]="edicaoForm.controls.email" />
+                  @if (campoEdicaoInvalido('email')) {
+                    <small class="erro">E-mail invalido.</small>
+                  }
+                </td>
+                <td class="acoes">
+                  <button type="button" class="btn salvar" (click)="salvarEdicao(contato.id)">
+                    Salvar edicao
+                  </button>
+                  <button type="button" class="btn cancelar" (click)="cancelarEdicao()">Cancelar</button>
+                </td>
+              } @else {
+                <td>{{ contato.nome }}</td>
+                <td>{{ contato.telefone }}</td>
+                <td>{{ contato.email }}</td>
+                <td class="acoes">
+                  <button type="button" class="btn editar" (click)="iniciarEdicao(contato)">Editar</button>
+                  <button type="button" class="btn excluir" (click)="excluirContato(contato.id)">Excluir</button>
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
